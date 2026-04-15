@@ -1,0 +1,3 @@
+export enum SOCKET_EVENT {
+  SERVER_EMIT_DEMO = 'SERVER_EMIT_DEMO',
+}

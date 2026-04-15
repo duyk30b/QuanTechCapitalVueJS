@@ -1,0 +1,42 @@
+.table-wrapper {
+  overflow-x: auto;
+
+  & > table {
+    color: #333;
+    width: 100%;
+
+    & > thead {
+      background-color: var(--color-table-thead-bg);
+      color: var(--color-table-thead-text);
+      border: 1px solid var(--color-table-thead-bg);
+
+      & > tr {
+        & > th {
+          padding: 0.4rem 0.5rem;
+        }
+      }
+    }
+
+    & > tbody {
+      counter-reset: rowNumber 0;
+      & > tr {
+        counter-increment: rowNumber 1;
+        td.auto-index:first-child::before {
+          content: counter(rowNumber);
+        }
+
+        &:nth-child(even) {
+          background-color: var(--color-table-td-even-bg);
+        }
+        &:hover {
+          background-color: var(--color-table-td-hover-bg);
+        }
+
+        & > td {
+          border: 1px solid #e8e8e8;
+          padding: 0.4rem 0.4rem;
+        }
+      }
+    }
+  }
+}

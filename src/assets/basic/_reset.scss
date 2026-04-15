@@ -1,0 +1,79 @@
+@layer local_reset {
+  * {
+    box-sizing: border-box;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a,
+  button,
+  input {
+    touch-action: manipulation;
+  }
+
+  svg {
+    display: inline;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  ol,
+  ul {
+    list-style-type: none;
+    list-style-position: inside;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    thead {
+      tr {
+        th {
+          white-space: nowrap;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  pre,
+  code {
+    margin: 0;
+    font-family: monospace, monospace;
+  }
+
+  summary {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  select {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  input {
+    font-size: 16px !important;
+    outline: none;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    margin-left: 1rem;
+  }
+
+  [contenteditable='true']:empty:not(:focus):before {
+    content: attr(placeholder);
+    opacity: 0.3;
+    pointer-events: none;
+    display: block;
+    /* For Firefox */
+  }
+}
