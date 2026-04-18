@@ -7,13 +7,13 @@ import type { LoginDto, LoginRootDto } from './auth.dto'
 export class AuthApi {
   static async login(body: LoginDto) {
     const response = await axios.post(`${CONFIG.API_URL}/auth/login`, body)
-    const { data } = response.data as FullResponse<{
+    const data = response.data as {
       user: any
       accessToken: string
       accessExp: number
       refreshToken: string
       refreshExp: number
-    }>
+    }
     return {
       user: User.from(data.user),
       accessToken: data.accessToken as string,

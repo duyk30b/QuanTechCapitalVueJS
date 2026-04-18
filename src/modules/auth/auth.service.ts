@@ -18,7 +18,7 @@ export class AuthService {
       return true
     } catch (error: any) {
       const message =
-        error?.response?.data?.message || error.message || error?.config.signal?.reason
+        error?.response?.data?.detail || error.message || error?.config.signal?.reason
       AlertStore.addError(message)
     }
   }
@@ -32,7 +32,7 @@ export class AuthService {
       return true
     } catch (error: any) {
       const message =
-        error?.response?.data?.message || error.message || error?.config.signal?.reason
+        error?.response?.data?.detail || error.message || error?.config.signal?.reason
       AlertStore.addError(message)
     }
   }
@@ -53,7 +53,7 @@ export class AuthService {
         }
       } catch (error: any) {
         const message =
-          error?.response?.data?.message || error.message || error?.config.signal?.reason
+          error?.response?.data?.detail || error.message || error?.config.signal?.reason
         AlertStore.addError(message)
       }
     }
@@ -73,7 +73,9 @@ export class AuthService {
         const data = await AuthApi.refreshToken(refreshToken)
         LocalStorageService.setAccessToken(data)
       } catch (error: any) {
-        console.log('🚀 ~ file: auth.service.ts:111 ~ AuthService ~ start ~ error:', error)
+        const message =
+          error?.response?.data?.detail || error.message || error?.config.signal?.reason
+        // AlertStore.addError(message)
         await AuthService.logout('Phiên đã hết hạn, vui lòng đăng nhập lại')
       }
     }

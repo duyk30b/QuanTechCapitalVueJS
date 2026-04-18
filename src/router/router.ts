@@ -24,6 +24,30 @@ const Router = createRouter({
           meta: { title: 'Trang chủ' },
         },
         {
+          path: 'ea-mql5',
+          name: 'EaMql5',
+          meta: { title: 'EA MQL5' },
+          redirect: () => ({ name: 'EaMql5List' }),
+          children: [
+            {
+              path: 'list',
+              name: 'EaMql5List',
+              component: () => import('../views/ea-mql5/EaMql5List.vue'),
+            },
+            {
+              path: 'upsert/:id?',
+              name: 'EaMql5Upsert',
+              component: () => import('../views/ea-mql5/upsert/EaMql5UpsertContainer.vue'),
+              meta: {
+                title: (route: RouteLocationNormalizedLoaded) => {
+                  if (route.params.id) return 'Cập nhật EA MQL5'
+                  return 'Tạo mới EA MQL5'
+                },
+              },
+            },
+          ],
+        },
+        {
           path: 'user',
           name: 'User',
           children: [

@@ -12,7 +12,9 @@ import {
   IconDollar,
   IconHome,
   IconPicCenter,
+  IconReconciliation,
   IconShop,
+  IconSisternode,
   IconTeam,
 } from '../../common/icon-antd'
 import { MeService } from '../../modules/_me/me.service'
@@ -62,6 +64,11 @@ const handleMenuClick = (menu: { key: string; keyPath: string[] }) => {
     <a-menu-item key="AppHome">
       <template #icon><IconHome /></template>
       <span><router-link :to="{ name: 'AppHome' }">Home</router-link></span>
+    </a-menu-item>
+
+    <a-menu-item key="EaMql5">
+      <template #icon><IconReconciliation /></template>
+      <router-link :to="{ name: 'EaMql5' }">EA MQL5</router-link>
     </a-menu-item>
 
     <a-sub-menu

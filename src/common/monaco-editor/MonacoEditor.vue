@@ -10,7 +10,7 @@ import { emmetHTML } from 'emmet-monaco-es'
 const props = withDefaults(
   defineProps<{
     value: string
-    language?: 'html' | 'css' | 'javascript' | 'typescript' | 'json'
+    language?: 'html' | 'css' | 'javascript' | 'typescript' | 'json' | 'cpp' | 'python'
     theme?: 'vs-dark' | 'vs-light'
     readOnly?: boolean
   }>(),
