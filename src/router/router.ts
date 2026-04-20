@@ -86,12 +86,19 @@ const Router = createRouter({
         {
           path: 'systems',
           name: 'Systems',
+          meta: { title: 'Hệ thống' },
           children: [
             {
-              path: 'user-info',
+              path: 'system-user',
               name: 'UserInfo',
-              component: () => import('../views/systems/UserInfo.vue'),
-              meta: { title: 'Hệ thống' },
+              component: () => import('../views/systems/system-user/UserInfo.vue'),
+              meta: { title: 'Tài khoản người dùng' },
+            },
+            {
+              path: 'system-setting',
+              name: 'SystemSetting',
+              component: () => import('../views/systems/system-setting/SystemSetting.vue'),
+              meta: { title: 'Cài đặt' },
             },
           ],
         },

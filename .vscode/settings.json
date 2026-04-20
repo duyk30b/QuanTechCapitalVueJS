@@ -23,13 +23,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "search.smartCase": true,
-  "javascript.preferences.quoteStyle": "single",
-  "javascript.format.semicolons": "remove",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.quoteStyle": "single",
-  "typescript.format.semicolons": "remove",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "js/ts.preferences.quoteStyle": "single",
+  "js/ts.format.semicolons": "remove",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.inlayHints.parameterNames.enabled": "literals",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
   "git.allowForcePush": true,
   "cSpell.language": "en,vi",
   "cSpell.words": [
@@ -55,7 +53,5 @@
   "editor.linkedEditing": true,
   "explorer.compactFolders": false,
   "workbench.editor.enablePreview": false,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "vue.autoInsert.dotValue": true,
-  "vue.complete.casing.props": "autoCamel"
+  "vue.autoInsert.dotValue": true
 }

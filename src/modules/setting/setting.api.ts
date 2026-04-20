@@ -1,37 +1,31 @@
 import { AxiosInstance } from '../../core/axios.instance'
-import type { FullResponse } from '../_base/base-dto'
-import type { SettingKey } from '../_me/store.variable'
+import { SettingGetQuery, type SettingListQuery } from './setting.dto'
+import { Setting, SettingKey } from './setting.model'
 
 export class SettingApi {
-  static async getMap() {
-    const response = await AxiosInstance.get(`/setting/get-map`)
-    const { data } = response.data as FullResponse<{ settingMap: Record<any, any> }>
-    return data
+  static async list(options: SettingListQuery): Promise<Setting[]> {
+    const params = SettingGetQuery.toQuery(options)
+
+    const response = await AxiosInstance.get('/setting/list', { params })
+    const data = response.data as { settingList: any[] }
+    return Setting.fromList(data.settingList)
   }
 
-  static async saveSettings(type: keyof typeof SettingKey, plain: string) {
-    const response = await AxiosInstance.post(`/setting/upsert/${type}`, {
-      data: plain,
+  static async map() {
+    const settingList = await SettingApi.list({})
+    const settingMap: Partial<Record<SettingKey, any>> = {}
+    settingList.forEach((setting) => {
+      settingMap[setting.key as SettingKey] = setting.value
     })
-    const { data } = response.data as FullResponse
-    return data
+
+    return settingMap
   }
 
-  static async loginGGDriver() {
-    const response = await AxiosInstance.get('/setting/google-driver/get-auth-url')
-    const { data } = response.data as FullResponse<{ url: string }>
-    return { url: data.url }
-  }
-
-  static async logoutGGDriver() {
-    const response = await AxiosInstance.post('/setting/google-driver/logout')
-    const { data } = response.data as FullResponse
-    return data
-  }
-
-  static async getAllAccountsGGDriver() {
-    const response = await AxiosInstance.get('/setting/google-driver/get-all-accounts')
-    const { data } = response.data as FullResponse<any[]>
+  static async upsert(type: keyof typeof SettingKey, setting: Setting) {
+    const response = await AxiosInstance.post(`/setting/upsert/${type}`, {
+      value: setting.value,
+    })
+    const data = response.data
     return data
   }
 }

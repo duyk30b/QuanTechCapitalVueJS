@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
-import VueButton from '../../common/VueButton.vue'
-import { IconSetting } from '../../common/icon-antd'
-import { AlertStore } from '../../common/vue-alert/vue-alert.store'
-import { InputDate, InputRadio, InputText } from '../../common/vue-form'
-import { MeApi } from '../../modules/_me/me.api'
-import { MeService } from '../../modules/_me/me.service'
-import { useSettingStore } from '../../modules/_me/setting.store'
-import { User } from '../../modules/user'
-import ModalChangePassword from './modal/ModalChangePassword.vue'
+import VueButton from '@/common/VueButton.vue'
+import { IconSetting } from '@/common/icon-antd'
+import { AlertStore } from '@/common/vue-alert/vue-alert.store'
+import { InputDate, InputRadio, InputText } from '@/common/vue-form'
+import { MeApi } from '@/modules/_me/me.api'
+import { MeService } from '@/modules/_me/me.service'
+import { useSettingStore } from '@/modules/_me/setting.store'
+import { User } from '@/modules/user'
+import ModalChangePassword from './ModalChangePassword.vue'
 
 const modalChangePassword = ref<InstanceType<typeof ModalChangePassword>>()
 

@@ -94,6 +94,9 @@ const handleMenuClick = (menu: { key: string; keyPath: string[] }) => {
       <a-menu-item key="UserInfo">
         <router-link :to="{ name: 'UserInfo' }">Thông tin cá nhân</router-link>
       </a-menu-item>
+      <a-menu-item key="SystemSetting">
+        <router-link :to="{ name: 'SystemSetting' }">Cài đặt</router-link>
+      </a-menu-item>
     </a-sub-menu>
     <a-sub-menu v-if="user?.userType === UserType.Root" key="ROOT">
       <template #icon>

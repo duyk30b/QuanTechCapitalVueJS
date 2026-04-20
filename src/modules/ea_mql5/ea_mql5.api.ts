@@ -56,4 +56,12 @@ export class EaMql5Api {
   static async destroyOne(id: string) {
     await AxiosInstance.delete(`/ea_mql5/destroy/${id}`)
   }
+
+  static async startRunTest(id: string) {
+    await AxiosInstance.post(`/ea_mql5/start-run-test/${id}`)
+  }
+
+  static async stopRunTest(id: string) {
+    await AxiosInstance.post(`/ea_mql5/stop-run-test/${id}`)
+  }
 }

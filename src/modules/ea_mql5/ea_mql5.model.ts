@@ -12,6 +12,7 @@ export class EaMql5 extends BaseModel {
     const ins = new EaMql5()
     ins.id = ''
     ins._localId = Math.random().toString(36).substring(2)
+    ins.mql5Code = ''
 
     return ins
   }

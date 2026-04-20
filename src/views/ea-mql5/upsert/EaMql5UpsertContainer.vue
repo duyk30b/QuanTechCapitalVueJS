@@ -65,6 +65,24 @@ const handleSave = async () => {
   }
 }
 
+const startRunTest = async () => {
+  try {
+    await EaMql5Api.startRunTest(eaMql5.value.id)
+    AlertStore.addSuccess('Đã bắt đầu chạy test')
+  } catch (error: any) {
+    console.log('🚀 ~ EaMql5UpsertContainer.vue:72 ~ startRunTest ~ error:', error)
+  }
+}
+
+const stopRunTest = async () => {
+  try {
+    await EaMql5Api.stopRunTest(eaMql5.value.id)
+    AlertStore.addSuccess('Đã dừng chạy test')
+  } catch (error: any) {
+    console.log('🚀 ~ EaMql5UpsertContainer.vue:80 ~ stopRunTest ~ error:', error)
+  }
+}
+
 const clickDelete = () => {
   ModalStore.confirm({
     title: 'Bạn có chắc chắn muốn xóa EA MQL5 này',
@@ -127,16 +145,17 @@ const clickDelete = () => {
     </VueTabs>
 
     <div class="mt-8 flex gap-4">
-      <VueButton color="red" type="button" @click="clickDelete">Xóa</VueButton>
+      <VueButton color="red" type="button" icon="trash" @click="clickDelete">Xóa</VueButton>
       <VueButton
         color="blue"
-        type="submit"
-        :loading="saveLoading"
-        icon="save"
+        type="button"
+        icon="send"
         style="margin-left: auto"
+        @click="startRunTest"
       >
-        Lưu lại
+        Run Test
       </VueButton>
+      <VueButton color="blue" type="submit" :loading="saveLoading" icon="save">Lưu lại</VueButton>
     </div>
   </form>
 </template>

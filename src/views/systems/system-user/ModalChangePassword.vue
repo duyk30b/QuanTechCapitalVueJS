@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import VueButton from '../../../common/VueButton.vue'
-import { IconClose } from '../../../common/icon-antd'
-import { AlertStore } from '../../../common/vue-alert/vue-alert.store'
-import { InputPassword, InputText } from '../../../common/vue-form'
-import VueModal from '../../../common/vue-modal/VueModal.vue'
-import { MeApi } from '../../../modules/_me/me.api'
-import { AuthService } from '../../../modules/auth/auth.service'
-import { User } from '../../../modules/user'
+import VueButton from '@/common/VueButton.vue'
+import { IconClose } from '@/common/icon-antd'
+import { AlertStore } from '@/common/vue-alert/vue-alert.store'
+import { InputPassword, InputText } from '@/common/vue-form'
+import VueModal from '@/common/vue-modal/VueModal.vue'
+import { MeApi } from '@/modules/_me/me.api'
+import { AuthService } from '@/modules/auth/auth.service'
+import { User } from '@/modules/user'
 
 const showModal = ref(false)
 const user = ref(User.blank())
