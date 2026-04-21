@@ -1,3 +1,4 @@
+import { AxiosInstance } from '@/core/axios.instance'
 import axios from 'axios'
 import { CONFIG } from '../../config'
 import type { FullResponse } from '../_base/base-dto'
@@ -24,7 +25,7 @@ export class AuthApi {
   }
 
   static async loginRoot(body: LoginRootDto) {
-    const response = await axios.post(`${CONFIG.API_URL}/auth/login-root`, body)
+    const response = await axios.post(`${CONFIG.API_URL}/auth/login_root`, body)
     const { data } = response.data as FullResponse<{
       user: any
       accessToken: string
@@ -42,13 +43,13 @@ export class AuthApi {
   }
 
   static async refreshToken(refreshToken: string) {
-    const response = await axios.post(`${CONFIG.API_URL}/auth/refresh-token`, { refreshToken })
+    const response = await axios.post(`${CONFIG.API_URL}/auth/refresh_token`, { refreshToken })
     const { data } = response.data as FullResponse<{ accessToken: string; accessExp: number }>
     return data
   }
 
-  static async logout(body: { uid: number; clientId: string }) {
-    const response = await axios.post(`${CONFIG.API_URL}/auth/logout`, body)
+  static async logout() {
+    const response = await AxiosInstance.post(`${CONFIG.API_URL}/auth/logout`)
     const { data } = response.data as FullResponse<boolean>
     return data
   }

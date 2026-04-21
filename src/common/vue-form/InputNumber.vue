@@ -6,7 +6,7 @@ import { IconSortDown, IconSortUp } from '../icon-font-awesome'
 
 const props = withDefaults(
   defineProps<{
-    value: number | string
+    value: number | string | undefined
     prepend?: string
     append?: string
     textAlign?: 'left' | 'right' | 'center'

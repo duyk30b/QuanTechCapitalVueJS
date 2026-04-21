@@ -1,5 +1,6 @@
 import { OmitClass, PickClass } from '../../utils'
-import type { ConditionDate, ConditionString } from '../_base/base-condition'
+import type { ConditionDate, ConditionEnum, ConditionString } from '../_base/base-condition'
+import type { SettingKey } from './setting.model'
 
 export class SettingGetQuery {
   page?: number
@@ -8,6 +9,7 @@ export class SettingGetQuery {
   }
 
   filter?: {
+    key: SettingKey | ConditionEnum<SettingKey>
   }
 
   sort?: {
@@ -26,5 +28,6 @@ export class SettingGetQuery {
 }
 
 export class SettingPaginationQuery extends SettingGetQuery { }
-export class SettingListQuery extends OmitClass(SettingGetQuery, ['page']) { }
+export class SettingGetListQuery extends OmitClass(SettingGetQuery, ['page']) { }
+export class SettingGetOneQuery extends PickClass(SettingGetQuery, ['filter', 'relation', 'sort']) { }
 export class SettingDetailQuery extends PickClass(SettingGetQuery, ['relation']) { }

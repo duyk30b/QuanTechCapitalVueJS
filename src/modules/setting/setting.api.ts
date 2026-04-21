@@ -1,9 +1,9 @@
 import { AxiosInstance } from '../../core/axios.instance'
-import { SettingGetQuery, type SettingListQuery } from './setting.dto'
+import { SettingDetailQuery, SettingGetQuery, type SettingGetListQuery } from './setting.dto'
 import { Setting, SettingKey } from './setting.model'
 
 export class SettingApi {
-  static async list(options: SettingListQuery): Promise<Setting[]> {
+  static async list(options: SettingGetListQuery): Promise<Setting[]> {
     const params = SettingGetQuery.toQuery(options)
 
     const response = await AxiosInstance.get('/setting/list', { params })

@@ -35,9 +35,9 @@ const Router = createRouter({
               component: () => import('../views/ea-mql5/EaMql5List.vue'),
             },
             {
-              path: 'upsert/:id?',
-              name: 'EaMql5Upsert',
-              component: () => import('../views/ea-mql5/upsert/EaMql5UpsertContainer.vue'),
+              path: 'action/:id?',
+              name: 'EaMql5Action',
+              component: () => import('../views/ea-mql5/action/EaMql5ActionContainer.vue'),
               meta: {
                 title: (route: RouteLocationNormalizedLoaded) => {
                   if (route.params.id) return 'Cập nhật EA MQL5'

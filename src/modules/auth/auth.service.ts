@@ -41,6 +41,14 @@ export class AuthService {
 
   static logout = (() => {
     const start = async (msg: string) => {
+      try {
+        await AuthApi.logout()
+      } catch (error: any) {
+        const message =
+          error?.response?.data?.detail || error.message || error?.config.signal?.reason
+        AlertStore.addError(message)
+      }
+
       const uid = MeService.user.value?.id
       LocalStorageService.removeToken()
       MeService.user.value = null // khai báo trước Router push Login
@@ -48,13 +56,9 @@ export class AuthService {
       AlertStore.addError(msg, 2000)
       try {
         await IndexedDBConnection.clear()
-        if (uid) {
-          await AuthApi.logout({ uid, clientId: CONFIG.CLIENT_ID })
-        }
       } catch (error: any) {
-        const message =
-          error?.response?.data?.detail || error.message || error?.config.signal?.reason
-        AlertStore.addError(message)
+        console.log('🚀 ~ auth.service.ts:63 ~ AuthService ~ start ~ error:', error)
+
       }
     }
     let fetching: any = null

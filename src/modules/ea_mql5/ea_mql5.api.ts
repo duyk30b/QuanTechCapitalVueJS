@@ -34,31 +34,66 @@ export class EaMql5Api {
 
   static async createOne(body: { eaMql5: EaMql5 }) {
     const { eaMql5 } = body
-    const response = await AxiosInstance.post('/ea_mql5/create', {
+    const response = await AxiosInstance.post(`/ea_mql5/create`, {
       name: eaMql5.name,
       description: eaMql5.description,
       mql5Code: eaMql5.mql5Code,
+      configIni: {
+        symbol: eaMql5.configIni.symbol,
+        period: eaMql5.configIni.period,
+        fromDate: eaMql5.configIni.fromDate,
+        toDate: eaMql5.configIni.toDate,
+        deposit: eaMql5.configIni.deposit,
+        currency: eaMql5.configIni.currency,
+        leverage: eaMql5.configIni.leverage,
+        model: eaMql5.configIni.model,
+        optimization: eaMql5.configIni.optimization,
+        optimizationCriterion: eaMql5.configIni.optimizationCriterion,
+      }
     })
-    const data = response.data as { eaMql5Id: string }
-
-    return data.eaMql5Id
+    const data = response.data as { eaMql5: any }
+    return EaMql5.from(data.eaMql5)
   }
 
   static async updateOne(id: string, body: { eaMql5: EaMql5 }) {
     const { eaMql5 } = body
-    await AxiosInstance.put(`/ea_mql5/update/${id}`, {
+    const response = await AxiosInstance.post(`/ea_mql5/update/${id}`, {
       name: eaMql5.name,
       description: eaMql5.description,
       mql5Code: eaMql5.mql5Code,
+      configIni: {
+        symbol: eaMql5.configIni.symbol,
+        period: eaMql5.configIni.period,
+        fromDate: eaMql5.configIni.fromDate,
+        toDate: eaMql5.configIni.toDate,
+        deposit: eaMql5.configIni.deposit,
+        currency: eaMql5.configIni.currency,
+        leverage: eaMql5.configIni.leverage,
+        model: eaMql5.configIni.model,
+        optimization: eaMql5.configIni.optimization,
+        optimizationCriterion: eaMql5.configIni.optimizationCriterion,
+      }
     })
+    const data = response.data as { eaMql5: any }
+    return EaMql5.from(data.eaMql5)
   }
 
   static async destroyOne(id: string) {
-    await AxiosInstance.delete(`/ea_mql5/destroy/${id}`)
+    await AxiosInstance.post(`/ea_mql5/destroy/${id}`)
   }
 
-  static async startRunTest(id: string) {
-    await AxiosInstance.post(`/ea_mql5/start-run-test/${id}`)
+  static async startCompile(body: { eaMql5: EaMql5 }) {
+    const { eaMql5 } = body
+    const response = await AxiosInstance.post(`/ea_mql5/start-compile/${eaMql5.id}`)
+    const data = response.data as { eaMql5: any, logs: string[], compileSuccess: boolean }
+
+    return data
+  }
+
+  static async startRunTest(id: string, configIniText: string) {
+    await AxiosInstance.post(`/ea_mql5/start-run-test/${id}`, {
+      configIniText
+    })
   }
 
   static async stopRunTest(id: string) {

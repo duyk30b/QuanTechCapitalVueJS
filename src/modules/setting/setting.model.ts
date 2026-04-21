@@ -3,16 +3,28 @@ import { BaseModel } from '../_base/base.model'
 export enum SettingKey {
   MAIN_PATH = "MAIN_PATH",
   MQL5_FOLDER_PATH = "MQL5_FOLDER_PATH",
+  MT5_FOLDER_PATH = "MT5_FOLDER_PATH",
+  MT5_LOGIN = "MT5_LOGIN",
+  MT5_PASSWORD = "MT5_PASSWORD",
+  MT5_SERVER = "MT5_SERVER",
 }
 
 export const SettingKeyLabelMap: Record<SettingKey, string> = {
   [SettingKey.MAIN_PATH]: "Thư mục lưu dữ liệu chính",
   [SettingKey.MQL5_FOLDER_PATH]: "Thư mục MQL5",
+  [SettingKey.MT5_FOLDER_PATH]: "Thư mục cài đặt MT5",
+  [SettingKey.MT5_LOGIN]: "MT5 Login",
+  [SettingKey.MT5_PASSWORD]: "MT5 Password",
+  [SettingKey.MT5_SERVER]: "MT5 Server",
 }
 
 export const SettingKeyExampleMap: Record<SettingKey, string> = {
   [SettingKey.MAIN_PATH]: "C:\\QTC_MQL5",
   [SettingKey.MQL5_FOLDER_PATH]: "C:\\Users\\user\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075\\MQL5",
+  [SettingKey.MT5_FOLDER_PATH]: "C:\\Program Files\\MetaTrader 5",
+  [SettingKey.MT5_LOGIN]: "5049592387",
+  [SettingKey.MT5_PASSWORD]: "Us*hNv4p",
+  [SettingKey.MT5_SERVER]: "MetaQuotes-Demo",
 }
 
 export class Setting extends BaseModel {

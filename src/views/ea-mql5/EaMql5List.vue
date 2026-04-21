@@ -4,12 +4,13 @@ import { onBeforeMount, ref } from 'vue'
 import VueButton from '@/common/VueButton.vue'
 import VuePagination from '@/common/VuePagination.vue'
 import VueTag from '@/common/VueTag.vue'
-import { IconApartment, IconForm } from '@/common/icon-antd'
+import { IconApartment, IconDelete, IconForm } from '@/common/icon-antd'
 import { InputSelect } from '@/common/vue-form'
 import { MeService } from '@/modules/_me/me.service'
 import { RoleApi, RoleService, type Role } from '@/modules/role'
 import { EaMql5, EaMql5Api } from '@/modules/ea_mql5'
 import BugDevelopment from '../component/BugDevelopment.vue'
+import { ModalStore } from '@/common/vue-modal/vue-modal.store'
 
 const eaMql5List = ref<EaMql5[]>([])
 
@@ -49,6 +50,21 @@ const changePagination = async (options: { page?: number; limit?: number }) => {
   }
   await startFetchData()
 }
+
+const clickDelete = (eaMql5RefId: string) => {
+  ModalStore.confirm({
+    title: 'Bạn có chắc chắn muốn xóa EA MQL5 này',
+    content: 'EA MQL5 đã xóa không thể khôi phục lại được. Bạn vẫn muốn xóa ?',
+    async onOk() {
+      try {
+        await EaMql5Api.destroyOne(eaMql5RefId)
+        await startFetchData()
+      } catch (error) {
+        console.log('🚀 ~ EaMql5UpsertContainer.vue:108 ~ onOk ~ error:', error)
+      }
+    },
+  })
+}
 </script>
 
 <template>
@@ -58,7 +74,7 @@ const changePagination = async (options: { page?: number; limit?: number }) => {
         <IconApartment class="mr-1" />
         Danh sách EA MQL5
       </div>
-      <VueButton color="blue" icon="plus" @click="$router.push({ name: 'EaMql5Upsert' })">
+      <VueButton color="blue" icon="plus" @click="$router.push({ name: 'EaMql5Action' })">
         Thêm mới
       </VueButton>
     </div>
@@ -74,6 +90,7 @@ const changePagination = async (options: { page?: number; limit?: number }) => {
             <th>Tên EA</th>
             <th>Mô tả</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -87,9 +104,18 @@ const changePagination = async (options: { page?: number; limit?: number }) => {
             <td>{{ eaMql5.name }}</td>
             <td>{{ eaMql5.description }}</td>
             <td class="text-center">
-              <router-link :to="{ name: 'EaMql5Upsert', params: { id: eaMql5.id } }">
+              <router-link :to="{ name: 'EaMql5Action', params: { id: eaMql5.id } }">
                 <IconForm width="20px" height="20px" style="color: var(--text-orange)" />
               </router-link>
+            </td>
+            <td class="text-center">
+              <div
+                class="flex justify-center cursor-pointer"
+                style="color: var(--text-red); font-size: 20px"
+                @click="clickDelete(eaMql5.id)"
+              >
+                <IconDelete />
+              </div>
             </td>
           </tr>
         </tbody>

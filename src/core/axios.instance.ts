@@ -2,14 +2,14 @@ import axios, { type AxiosRequestConfig } from 'axios'
 import { reactive } from 'vue'
 import { AlertStore } from '../common/vue-alert/vue-alert.store'
 import { CONFIG } from '../config'
+import { AuthService } from '../modules/auth/auth.service'
 import { DeviceInstance } from './device.instance'
 import { LocalStorageService } from './local-storage.service'
-import { AuthService } from '../modules/auth/auth.service'
 
-axios.defaults.headers.post['x-os'] = DeviceInstance.platform
-axios.defaults.headers.post['x-browser'] = DeviceInstance.browser
-axios.defaults.headers.post['x-mobile'] = DeviceInstance.mobile
-axios.defaults.headers.post['x-client-id'] = CONFIG.CLIENT_ID
+axios.defaults.headers.common['X-OS'] = DeviceInstance.platform
+axios.defaults.headers.common['X-Browser'] = DeviceInstance.browser
+axios.defaults.headers.common['X-Mobile'] = DeviceInstance.mobile
+axios.defaults.headers.common['X-Client-Id'] = CONFIG.CLIENT_ID
 
 const AxiosLoading = reactive({ percent: 0, loading: true })
 
@@ -60,6 +60,8 @@ AxiosInstance.interceptors.response.use(
     return response
   },
   async (error: any) => {
+    console.log('🚀 ~ axios.instance.ts:63 ~ error:', error)
+    console.log('🚀 ~ axios.instance.ts:64 ~ error?.response?.status:', error?.response?.status)
     if (error?.response?.status === 401) {
       const originalRequest: AxiosRequestConfig = error.config
       await AuthService.refreshToken()
@@ -72,7 +74,7 @@ AxiosInstance.interceptors.response.use(
     if (error?.response?.status === 403) {
       await AuthService.logout('AXIOS: Bạn không có quyền truy cập')
     }
-    const message = error?.response?.data?.message || error.message || error?.config.signal?.reason
+    const message = error?.response?.data?.message || error?.response?.data?.detail || error.message || error?.config.signal?.reason
     if (message !== 'canceled') {
       if (error?.response?.status === 422) {
         AlertStore.add({ type: 'warning', message, time: 5000 })
