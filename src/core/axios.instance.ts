@@ -28,20 +28,17 @@ AxiosInstance.interceptors.request.use(
 
     // nếu refreshToken sắp hết hạn thì logout (cho hết hạn trước 60s)
     if (
+      !LocalStorageService.getAccessToken() ||
       !LocalStorageService.getRefreshToken() ||
       LocalStorageService.getRefreshExp() - 60 * 1000 < Date.now()
     ) {
-      await AuthService.logout('AXIOS: Phiên đã hết hạn, vui lòng đăng nhập lại')
+      AuthService.removeAuth()
       controller.abort()
       return config
     }
     // nếu accessToken sắp hết hạn (cho hết hạn trước 10s)
     if (LocalStorageService.getAccessExp() - 10 * 1000 < Date.now()) {
       await AuthService.refreshToken()
-    }
-    if (!LocalStorageService.getAccessToken()) {
-      controller.abort()
-      return config
     }
 
     config.headers!['Authorization'] = `Bearer ${LocalStorageService.getAccessToken()}`
@@ -60,9 +57,11 @@ AxiosInstance.interceptors.response.use(
     return response
   },
   async (error: any) => {
-    console.log('🚀 ~ axios.instance.ts:63 ~ error:', error)
-    console.log('🚀 ~ axios.instance.ts:64 ~ error?.response?.status:', error?.response?.status)
     if (error?.response?.status === 401) {
+      await AuthService.removeAuth()
+      return Promise.reject()
+    }
+    if (error?.response?.status === 440) {
       const originalRequest: AxiosRequestConfig = error.config
       await AuthService.refreshToken()
       if (!LocalStorageService.getAccessToken()) {
@@ -72,7 +71,7 @@ AxiosInstance.interceptors.response.use(
       return AxiosInstance(originalRequest)
     }
     if (error?.response?.status === 403) {
-      await AuthService.logout('AXIOS: Bạn không có quyền truy cập')
+      AlertStore.add({ type: 'error', message: 'Bạn không có quyền thực hiện hành động này', time: 5000 })
     }
     const message = error?.response?.data?.message || error?.response?.data?.detail || error.message || error?.config.signal?.reason
     if (message !== 'canceled') {

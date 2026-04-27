@@ -1,12 +1,19 @@
 import { BaseModel } from '../_base/base.model'
 
+export enum EaMql5Status {
+  Init = 0,
+  Compiled = 1,
+  Testing = 2,
+  Finished = 3
+}
+
 export class EaMql5 extends BaseModel {
   id: string
   name: string
   description: string
   mql5Code: string
-  compiled: boolean
   userId: number
+  status: EaMql5Status
   configIni: {
     symbol: string
     period: string
@@ -26,7 +33,7 @@ export class EaMql5 extends BaseModel {
     ins.id = ''
     ins._localId = Math.random().toString(36).substring(2)
     ins.mql5Code = ''
-    ins.compiled = false
+    ins.status = EaMql5Status.Init
     ins.configIni = {
       symbol: 'EURUSD',
       period: 'H1',
@@ -94,7 +101,7 @@ export class EaMql5 extends BaseModel {
     if (a.description != b.description) return false
     if (a.mql5Code != b.mql5Code) return false
     if (a.userId != b.userId) return false
-    if (a.compiled != b.compiled) return false
+    if (a.status != b.status) return false
 
     if (a.configIni.symbol != b.configIni.symbol) return false
     if (a.configIni.period != b.configIni.period) return false

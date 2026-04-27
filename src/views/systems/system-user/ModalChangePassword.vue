@@ -38,6 +38,7 @@ const handleSave = async () => {
     await MeApi.changePassword(oldPassword.value, newPassword.value)
     AlertStore.addSuccess('Đổi mật khẩu thành công')
     AuthService.logout('Đổi mật khẩu')
+    AuthService.removeAuth()
   } catch (error) {
     console.log('🚀 ~ file: ChangePassword.vue:38 ~ handleSave ~ error:', error)
   } finally {

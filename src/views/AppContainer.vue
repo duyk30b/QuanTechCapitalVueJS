@@ -15,13 +15,13 @@ onBeforeMount(async () => {
       !LocalStorageService.getRefreshToken ||
       LocalStorageService.getRefreshExp() - 60 * 1000 < Date.now()
     ) {
-      await AuthService.logout('Container: Token đã hết hạn, vui lòng đăng nhập lại !')
+      AuthService.removeAuth()
     } else {
       await MeService.initData()
     }
   } catch (error) {
     console.log('🚀 ~ file: AppContainer.vue:26 ~ onBeforeMount ~ error:', error)
-    await AuthService.logout('Container: Đã xảy ra lỗi, vui lòng đăng nhập lại !')
+    AuthService.removeAuth()
   } finally {
     loaded.value = true
   }

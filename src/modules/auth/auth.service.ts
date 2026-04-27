@@ -42,23 +42,14 @@ export class AuthService {
   static logout = (() => {
     const start = async (msg: string) => {
       try {
-        await AuthApi.logout()
+        const refreshToken = LocalStorageService.getRefreshToken()
+        if (refreshToken) {
+          await AuthApi.logout(refreshToken)
+        }
       } catch (error: any) {
         const message =
           error?.response?.data?.detail || error.message || error?.config.signal?.reason
         AlertStore.addError(message)
-      }
-
-      const uid = MeService.user.value?.id
-      LocalStorageService.removeToken()
-      MeService.user.value = null // khai báo trước Router push Login
-      Router.push({ name: 'Login' })
-      AlertStore.addError(msg, 2000)
-      try {
-        await IndexedDBConnection.clear()
-      } catch (error: any) {
-        console.log('🚀 ~ auth.service.ts:63 ~ AuthService ~ start ~ error:', error)
-
       }
     }
     let fetching: any = null
@@ -69,18 +60,25 @@ export class AuthService {
     }
   })()
 
+  static async removeAuth() {
+    LocalStorageService.removeToken()
+    MeService.user.value = null // khai báo trước Router push Login
+    Router.push({ name: 'Login' })
+    await IndexedDBConnection.clear()
+  }
+
   static refreshToken = (() => {
     const start = async () => {
+      const refreshToken = LocalStorageService.getRefreshToken()
+      if (!refreshToken) {
+        AuthService.removeAuth()
+        return
+      }
       try {
-        const refreshToken = LocalStorageService.getRefreshToken()
-        if (!refreshToken) throw new Error()
         const data = await AuthApi.refreshToken(refreshToken)
         LocalStorageService.setAccessToken(data)
       } catch (error: any) {
-        const message =
-          error?.response?.data?.detail || error.message || error?.config.signal?.reason
-        // AlertStore.addError(message)
-        await AuthService.logout('Phiên đã hết hạn, vui lòng đăng nhập lại')
+        AuthService.removeAuth()
       }
     }
     let fetching: any = null

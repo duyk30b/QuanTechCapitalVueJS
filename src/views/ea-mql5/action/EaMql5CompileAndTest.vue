@@ -3,7 +3,7 @@ import { VueButton } from '@/common'
 import MonacoEditor from '@/common/monaco-editor/MonacoEditor.vue'
 import { InputDate, InputNumber, InputSelect, InputText } from '@/common/vue-form'
 import { ModalStore } from '@/common/vue-modal/vue-modal.store'
-import { EaMql5, EaMql5Api } from '@/modules/ea_mql5'
+import { EaMql5, EaMql5Api, EaMql5Status } from '@/modules/ea_mql5'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { eaMql5OldRef, eaMql5Ref } from './ea_mql5_ref'
@@ -285,7 +285,7 @@ const handleStartRunTest = async () => {
         color="blue"
         type="button"
         icon="send"
-        :disabled="hasChangeData || !eaMql5Ref.id || !eaMql5OldRef.compiled"
+        :disabled="hasChangeData || !eaMql5Ref.id || ![EaMql5Status.Compiled].includes(eaMql5Ref.status)"
         @click="handleStartRunTest"
         :loading="runTestLoading"
       >
@@ -296,7 +296,9 @@ const handleStartRunTest = async () => {
         color="blue"
         type="button"
         icon="send"
-        :disabled="hasChangeData || !eaMql5Ref.id || eaMql5OldRef.compiled"
+        :disabled="
+          hasChangeData || !eaMql5Ref.id || ![EaMql5Status.Init].includes(eaMql5Ref.status)
+        "
         @click="handleClickCompile"
         :loading="compileLoading"
       >
@@ -308,7 +310,9 @@ const handleStartRunTest = async () => {
         type="submit"
         :loading="saveLoading"
         icon="save"
-        :disabled="!hasChangeData"
+        :disabled="
+          !hasChangeData || ![EaMql5Status.Init, EaMql5Status.Compiled].includes(eaMql5Ref.status)
+        "
       >
         Save
       </VueButton>

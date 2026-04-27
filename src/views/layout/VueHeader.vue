@@ -29,6 +29,7 @@ watchEffect(() => {
 
 const startLogout = async () => {
   await AuthService.logout('Đăng xuất thành công')
+  AuthService.removeAuth()
 }
 </script>
 

@@ -160,7 +160,7 @@ Router.beforeEach((to, from, next) => {
   // }
 
   if (to.meta.auth === AuthLevel.USER && !user.value) {
-    AuthService.logout('Tài khoản không hợp lệ, vui lòng đăng nhập lại !')
+    AuthService.removeAuth()
     return next({ name: 'Login' })
   }
 
