@@ -1,22 +1,15 @@
 <script setup lang="ts">
 import { VueButton } from '@/common'
-import { IconRight } from '@/common/icon-antd'
 import MonacoEditor from '@/common/monaco-editor/MonacoEditor.vue'
 import { AlertStore } from '@/common/vue-alert/vue-alert.store'
 import { InputDate, InputText } from '@/common/vue-form'
-import { ModalStore } from '@/common/vue-modal/vue-modal.store'
-import { VueTabMenu, VueTabPanel, VueTabs } from '@/common/vue-tabs'
-import { useSettingStore } from '@/modules/_me/setting.store'
-import { EaMql5, EaMql5Api } from '@/modules/ea_mql5'
-import { Breadcrumb } from '@/views/component'
-import { computed, onBeforeMount, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { eaMql5OldRef, eaMql5Ref } from './ea_mql5_ref'
+import InputNumber from '@/common/vue-form/InputNumber.vue'
+import { EaMql5Api } from '@/modules/ea_mql5'
 import { SettingKey, SettingService } from '@/modules/setting'
 import { ESTimer } from '@/utils'
-import InputNumber from '@/common/vue-form/InputNumber.vue'
-
-const settingStore = useSettingStore()
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { eaMql5Ref } from './ea_mql5_ref'
 
 const route = useRoute()
 const router = useRouter()

@@ -9,11 +9,11 @@ import { InputCheckboxList, InputText, VueSwitch } from '../../../../common/vue-
 import type { CheckboxOptionType } from '../../../../common/vue-form/InputCheckboxList.vue'
 import { ModalStore } from '../../../../common/vue-modal/vue-modal.store'
 import { VueTabMenu, VueTabPanel, VueTabs } from '../../../../common/vue-tabs'
-import { useSettingStore } from '../../../../modules/_me/setting.store'
 import { Permission, PermissionService } from '../../../../modules/permission'
 import { Role, RoleService } from '../../../../modules/role'
 import { UserService } from '../../../../modules/user'
 import { Breadcrumb } from '../../../component'
+import { useGlobalStore } from '@/modules/_me/global.store'
 
 const TABS_KEY = {
   ROLE_INFORMATION: 'ROLE_INFORMATION',
@@ -22,7 +22,7 @@ const TABS_KEY = {
 
 const activeTab = ref(TABS_KEY.ROLE_INFORMATION)
 
-const settingStore = useSettingStore()
+const settingStore = useGlobalStore()
 const { isMobile } = settingStore
 
 const route = useRoute()
@@ -246,10 +246,7 @@ const handleChangeCheckLevel2 = (e: Event, level1Id: number, level2Id: number) =
       <template #panel>
         <VueTabPanel :tabKey="TABS_KEY.ROLE_INFORMATION">
           <div class="mt-4 p-4" style="max-width: 800px">
-            <div
-              class="flex"
-              :class="isMobile ? 'flex-col items-stretch mt-2' : 'items-center'"
-            >
+            <div class="flex" :class="isMobile ? 'flex-col items-stretch mt-2' : 'items-center'">
               <div style="width: 100px; flex: none">Tên vai trò</div>
               <InputText v-model:value="role.name" required />
             </div>

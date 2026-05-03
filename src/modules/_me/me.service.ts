@@ -4,8 +4,6 @@ import { arrayToKeyValue } from '../../utils'
 import type { Permission } from '../permission/permission.model'
 import { User } from '../user'
 import { MeApi } from './me.api'
-import { SETTING_DEFAULT } from './setting.default'
-import { useSettingStore } from './setting.store'
 
 export class MeService {
   static user = ref(LocalStorageService.getRefreshToken() ? User.blank() : null)

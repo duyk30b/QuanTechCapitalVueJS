@@ -279,7 +279,7 @@ const handleStartRunTest = async () => {
       </div>
     </div>
 
-    <div class="mt-8 flex gap-4">
+    <div class="mt-4 flex gap-4">
       <VueButton
         style="margin-left: auto"
         color="blue"

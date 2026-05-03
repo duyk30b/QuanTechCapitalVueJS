@@ -47,7 +47,6 @@ export class AuthApi {
   }
 
   static async logout(refreshToken: string) {
-    console.log('🚀 ~ auth.api.ts:53 ~ AuthApi ~ logout ~ response:')
     const response = await axios.post(`${CONFIG.API_URL}/auth/logout`, { refreshToken })
     const data = response.data as { detail: string }
     return data

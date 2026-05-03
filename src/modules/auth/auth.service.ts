@@ -1,8 +1,7 @@
-import { CONFIG } from '@/config'
 import { IndexedDBConnection } from '@/core/indexed-db'
+import { reconnectSocket } from '@/socket/socket.base'
 import { AlertStore } from '../../common/vue-alert/vue-alert.store'
 import { LocalStorageService } from '../../core/local-storage.service'
-import { reconnectSocket } from '../../core/socket/socket.base'
 import { Router } from '../../router/router'
 import { MeService } from '../_me/me.service'
 import { AuthApi } from './auth.api'
@@ -17,8 +16,9 @@ export class AuthService {
       reconnectSocket()
       return true
     } catch (error: any) {
+      console.log('🚀 ~ auth.service.ts:20 ~ AuthService ~ login ~ error:', error)
       const message =
-        error?.response?.data?.detail || error.message || error?.config.signal?.reason
+        error?.response?.data?.message || error.message || error?.config.signal?.reason
       AlertStore.addError(message)
     }
   }
@@ -32,7 +32,7 @@ export class AuthService {
       return true
     } catch (error: any) {
       const message =
-        error?.response?.data?.detail || error.message || error?.config.signal?.reason
+        error?.response?.data?.message || error.message || error?.config.signal?.reason
       AlertStore.addError(message)
     }
   }
@@ -48,7 +48,7 @@ export class AuthService {
         }
       } catch (error: any) {
         const message =
-          error?.response?.data?.detail || error.message || error?.config.signal?.reason
+          error?.response?.data?.message || error.message || error?.config.signal?.reason
         AlertStore.addError(message)
       }
     }

@@ -11,6 +11,8 @@ import { RoleApi, RoleService, type Role } from '@/modules/role'
 import { EaMql5, EaMql5Api } from '@/modules/ea_mql5'
 import BugDevelopment from '../component/BugDevelopment.vue'
 import { ModalStore } from '@/common/vue-modal/vue-modal.store'
+import Breadcrumb from '../component/Breadcrumb.vue'
+import MT5ProcessStatus from '../component/MT5ProcessStatus.vue'
 
 const eaMql5List = ref<EaMql5[]>([])
 
@@ -68,17 +70,18 @@ const clickDelete = (eaMql5RefId: string) => {
 </script>
 
 <template>
-  <div class="page-header">
-    <div class="page-header-content">
-      <div class="hidden md:block">
-        <IconApartment class="mr-1" />
-        Danh sách EA MQL5
-      </div>
+  <div class="mx-4 mt-4 gap-4 flex items-center">
+    <div class="hidden md:flex gap-2 items-center text-lg font-medium">
+      <Breadcrumb />
+    </div>
+    <div>
       <VueButton color="blue" icon="plus" @click="$router.push({ name: 'EaMql5Action' })">
         Thêm mới
       </VueButton>
     </div>
-    <div class="page-header-setting"></div>
+    <div class="ml-auto flex items-center gap-8">
+      <MT5ProcessStatus />
+    </div>
   </div>
 
   <div class="page-main">

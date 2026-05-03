@@ -2,7 +2,6 @@
 import { IconRight } from '@/common/icon-antd'
 import { ModalStore } from '@/common/vue-modal/vue-modal.store'
 import { VueTabMenu, VueTabPanel, VueTabs } from '@/common/vue-tabs'
-import { useSettingStore } from '@/modules/_me/setting.store'
 import { EaMql5, EaMql5Api } from '@/modules/ea_mql5'
 import { Breadcrumb } from '@/views/component'
 import { onBeforeMount, ref } from 'vue'
@@ -10,6 +9,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { eaMql5OldRef, eaMql5Ref } from './ea_mql5_ref'
 import EaMql5CompileAndTest from './EaMql5CompileAndTest.vue'
 import EaMql5RunTest from './EaMql5RunTest.vue'
+import MT5ProcessStatus from '@/views/component/MT5ProcessStatus.vue'
 
 const TABS_KEY = {
   EA_COMPILE_AND_TEST: 'EA_COMPILE_AND_TEST',
@@ -17,8 +17,6 @@ const TABS_KEY = {
 }
 
 const activeTab = ref(TABS_KEY.EA_COMPILE_AND_TEST)
-
-const settingStore = useSettingStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -39,7 +37,7 @@ const startFetchEaMql5 = async (eaMql5Id?: string) => {
 onBeforeMount(async () => {
   const eaMql5Id = String(route.params.id || '')
   try {
-    await startFetchEaMql5(eaMql5Id) 
+    await startFetchEaMql5(eaMql5Id)
   } catch (error) {
     console.log('🚀 ~ EaMql5UpsertContainer.vue:56 ~ onBeforeMount ~ error:', error)
   }
@@ -68,7 +66,9 @@ const clickDelete = () => {
       <IconRight style="font-size: 0.7em; opacity: 0.5" />
       <span>{{ eaMql5Ref.name }}</span>
     </div>
-    <div class="ml-auto flex items-center gap-8"></div>
+    <div class="ml-auto flex items-center gap-8">
+      <MT5ProcessStatus />
+    </div>
   </div>
 
   <div class="md:mx-4 mt-4 p-4 bg-white">

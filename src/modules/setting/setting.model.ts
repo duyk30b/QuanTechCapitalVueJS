@@ -19,8 +19,8 @@ export const SettingKeyLabelMap: Record<SettingKey, string> = {
 export const SettingKeyExampleMap: Record<SettingKey, string> = {
   [SettingKey.MT5_FOLDER_PATH]: "C:\\Program Files\\MetaTrader 5",
   [SettingKey.MQL5_FOLDER_PATH]: "C:\\Users\\user\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075\\MQL5",
-  [SettingKey.MT5_LOGIN]: "5049801998",
-  [SettingKey.MT5_PASSWORD]: "K_NjP7Tq",
+  [SettingKey.MT5_LOGIN]: "10010762111",
+  [SettingKey.MT5_PASSWORD]: "_4WdZmHp",
   [SettingKey.MT5_SERVER]: "MetaQuotes-Demo",
 }
 

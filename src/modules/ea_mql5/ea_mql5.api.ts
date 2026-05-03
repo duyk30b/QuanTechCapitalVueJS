@@ -59,7 +59,7 @@ export class EaMql5Api {
     const { eaMql5 } = body
     const response = await AxiosInstance.post(`/ea_mql5/update/${id}`, {
       name: eaMql5.name,
-      description: eaMql5.description,
+      description: eaMql5.description || '',
       mql5Code: eaMql5.mql5Code,
       configIni: {
         symbol: eaMql5.configIni.symbol,

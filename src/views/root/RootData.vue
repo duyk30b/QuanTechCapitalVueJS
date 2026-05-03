@@ -1,40 +1,18 @@
 <script setup lang="ts">
 import InputArea from '@/common/vue-form/InputArea.vue'
 import { onMounted, ref } from 'vue'
-import { IconApartment, IconCloudUpload, IconLogout } from '../../common/icon-antd'
+import { IconApartment, IconCloudUpload } from '../../common/icon-antd'
 import { InputText } from '../../common/vue-form'
 import VueButton from '../../common/VueButton.vue'
-import { useSettingStore } from '../../modules/_me/setting.store'
 import { PermissionApi } from '../../modules/permission/permission.api'
 import { RootDataApi } from '../../modules/root/root-data/root-data.api'
-import { SettingApi } from '../../modules/setting/setting.api'
-
-const settingStore = useSettingStore()
 
 const keyMigration = ref<string>('')
 
-const googleDriverAccounts = ref<any[]>([])
-onMounted(async () => {
-  await loadGoogleDriverAccounts()
-})
-
-const loadGoogleDriverAccounts = async () => {
-  googleDriverAccounts.value = await SettingApi.getAllAccountsGGDriver()
-}
+onMounted(async () => {})
 
 const resetPermissionData = async () => {
   await PermissionApi.initData()
-}
-
-const loginGoogleDriver = async () => {
-  const { url } = await SettingApi.loginGGDriver()
-  window.open(url, '_blank', 'width=1000,height=700')
-}
-
-const logoutGoogleDriver = async () => {
-  await SettingApi.logoutGGDriver()
-  settingStore.GOOGLE_DRIVER = { email: '' }
-  await loadGoogleDriverAccounts()
 }
 
 const uploadPostgresToGoogleDriver = async () => {
@@ -91,39 +69,6 @@ const startReplaceAddressAll = async () => {
               <td>
                 <VueButton color="blue" @click="resetPermissionData()">
                   Reset Permission Data
-                </VueButton>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-center">2</td>
-              <td>
-                <div>Google Driver Account</div>
-                <div>
-                  <table class="bg-white">
-                    <tr v-for="(acc, index) in googleDriverAccounts" :key="index">
-                      <td>{{ acc.oid }}</td>
-                      <td class="px-2">{{ acc.email }}</td>
-                      <td>{{ acc.refreshToken.slice(0, 20) + '...' }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </td>
-              <td>
-                <VueButton
-                  v-if="!settingStore.GOOGLE_DRIVER.email"
-                  color="blue"
-                  @click="loginGoogleDriver()"
-                >
-                  Login Google Driver
-                </VueButton>
-
-                <VueButton
-                  v-if="settingStore.GOOGLE_DRIVER.email"
-                  color="blue"
-                  @click="logoutGoogleDriver()"
-                >
-                  <IconLogout />
-                  Logout
                 </VueButton>
               </td>
             </tr>

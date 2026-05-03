@@ -8,8 +8,8 @@ import './assets/css/antd.css'
 import './assets/main.scss'
 import './common/scss/vue-common.scss'
 import { IndexedDBConnection } from './core/indexed-db'
-import { socketInit } from './core/socket/socket.base'
 import { Router } from './router/router'
+import { socketInit } from './socket/socket.base'
 import { registerDirective } from './utils/vue-config/directive'
 
 const start = async () => {

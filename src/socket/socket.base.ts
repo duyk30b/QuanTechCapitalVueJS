@@ -1,8 +1,8 @@
 import io, { Socket } from 'socket.io-client'
-import { CONFIG } from '../../config'
-import { REFRESH_TOKEN } from '../local-storage.service'
+import { CONFIG } from '../config'
 import { SocketService } from './socket.service'
 import { SOCKET_EVENT } from './socket.variable'
+import { REFRESH_TOKEN } from '@/core/local-storage.service'
 
 let SocketBase: Socket
 
@@ -33,6 +33,9 @@ export const socketInit = () => {
 
   SocketBase.on(SOCKET_EVENT.SERVER_EMIT_DEMO, (data) => {
     SocketService.listenServerEmitDemo(data)
+  })
+  SocketBase.on(SOCKET_EVENT.SOCKET_MT5_STATUS, (data) => {
+    SocketService.listenSocketMt5Status(data)
   })
 
 
