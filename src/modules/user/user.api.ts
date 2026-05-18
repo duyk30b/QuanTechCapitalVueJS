@@ -8,7 +8,7 @@ export class UserApi {
     const params = UserGetQuery.toQuery(options)
 
     const response = await AxiosInstance.get('/user/pagination', { params })
-    const data = response.data 
+    const data = response.data
 
     return {
       userList: User.fromList(data.userList),
@@ -76,8 +76,8 @@ export class UserApi {
     return User.from(data.user)
   }
 
-  static async deleteOne(id: number) {
-    const response = await AxiosInstance.post(`/user/delete/${id}`)
+  static async destroyOne(id: number) {
+    const response = await AxiosInstance.post(`/user/destroy/${id}`)
     const data = response.data as { userId: number }
     return data
   }

@@ -8,7 +8,7 @@ import { onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { eaMql5OldRef, eaMql5Ref } from './ea_mql5_ref'
 import EaMql5CompileAndTest from './EaMql5CompileAndTest.vue'
-import EaMql5RunTest from './EaMql5RunTest.vue'
+import EaMql5RunTest from './EaMql5Report.vue'
 import MT5ProcessStatus from '@/views/component/MT5ProcessStatus.vue'
 
 const TABS_KEY = {

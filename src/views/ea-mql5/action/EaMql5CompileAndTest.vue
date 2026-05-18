@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { VueButton } from '@/common'
 import MonacoEditor from '@/common/monaco-editor/MonacoEditor.vue'
+import { AlertStore } from '@/common/vue-alert'
 import { InputDate, InputNumber, InputSelect, InputText } from '@/common/vue-form'
-import { ModalStore } from '@/common/vue-modal/vue-modal.store'
 import { EaMql5, EaMql5Api, EaMql5Status } from '@/modules/ea_mql5'
+import { SettingKey, SettingService } from '@/modules/setting'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { eaMql5OldRef, eaMql5Ref } from './ea_mql5_ref'
-import { AlertStore } from '@/common/vue-alert'
-import { SettingKey, SettingService } from '@/modules/setting'
-import { ESTimer } from '@/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -32,37 +30,6 @@ onMounted(async () => {
     (await SettingService.getOne({ filter: { key: SettingKey.MT5_PASSWORD } })).value || ''
   mt5Server.value =
     (await SettingService.getOne({ filter: { key: SettingKey.MT5_SERVER } })).value || ''
-})
-
-const iniConfigText = computed(() => {
-  return `[Common]
-Login=${mt5Login.value}
-Password=${mt5Password.value}
-Server=${mt5Server.value}
-AutoConfiguration=false
-
-[Tester]
-Expert=PYTHON_SERVER\\${eaMql5Ref.value.id}\\${eaMql5Ref.value.id}.ex5
-Symbol=${eaMql5Ref.value.configIni.symbol || ''}
-Period=${eaMql5Ref.value.configIni.period || ''}
-FromDate=${ESTimer.timeToText(eaMql5Ref.value.configIni.fromDate, 'YYYY.MM.DD') || ''}
-ToDate=${ESTimer.timeToText(eaMql5Ref.value.configIni.toDate, 'YYYY.MM.DD') || ''}
-Deposit=${eaMql5Ref.value.configIni.deposit || 0}
-Currency=${eaMql5Ref.value.configIni.currency || ''}
-Leverage=${eaMql5Ref.value.configIni.leverage || 0}
-Model=${eaMql5Ref.value.configIni.model || 0}
-Optimization=${eaMql5Ref.value.configIni.optimization || 0}
-OptimizationCriterion=${eaMql5Ref.value.configIni.optimizationCriterion || 0}
-ExecutionMode=0
-ForwardMode=0
-Report=MQL5\\Experts\\PYTHON_SERVER\\${eaMql5Ref.value.id}\\Report\\report
-ReplaceReport=1
-ShutdownTerminal=true
-Visual=false
-
-[TesterInputs]
-lot=0.1||0.1||0.1||1.000000||Y
-`
 })
 
 const hasChangeData = computed(() => {
@@ -117,7 +84,7 @@ const handleClickCompile = async () => {
 
 const handleStartRunTest = async () => {
   try {
-    await EaMql5Api.startRunTest(eaMql5OldRef.value.id, iniConfigText.value)
+    await EaMql5Api.startRunTest(eaMql5OldRef.value.id)
     AlertStore.addSuccess('Đã bắt đầu chạy test')
   } catch (error: any) {
     console.log('🚀 ~ EaMql5CompileAndTest.vue:88 ~ handleStartRunTest ~ error:', error)
@@ -271,10 +238,8 @@ const handleStartRunTest = async () => {
           </div>
         </div>
         <div style="flex-grow: 1; min-height: 300px" class="w-full lg:w-0.5 flex flex-col">
-          <div class="">Config file</div>
-          <div style="flex-grow: 1; border: 1px solid #cdcdcd">
-            <MonacoEditor :value="iniConfigText" language="ini" readOnly />
-          </div>
+          <div class="">Parameters</div>
+          <div style="flex-grow: 1; border: 1px solid #cdcdcd; min-height: 200px"></div>
         </div>
       </div>
     </div>
@@ -285,7 +250,9 @@ const handleStartRunTest = async () => {
         color="blue"
         type="button"
         icon="send"
-        :disabled="hasChangeData || !eaMql5Ref.id || ![EaMql5Status.Compiled].includes(eaMql5Ref.status)"
+        :disabled="
+          hasChangeData || !eaMql5Ref.id || ![EaMql5Status.Compiled].includes(eaMql5Ref.status)
+        "
         @click="handleStartRunTest"
         :loading="runTestLoading"
       >

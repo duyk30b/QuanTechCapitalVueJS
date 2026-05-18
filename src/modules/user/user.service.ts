@@ -187,8 +187,8 @@ export class UserService {
     return result
   }
 
-  static async deleteOne(id: number) {
-    const result = await UserApi.deleteOne(id)
+  static async destroyOne(id: number) {
+    const result = await UserApi.destroyOne(id)
     UserService.loadedAll = false
     UserRoleService.loadedAll = false
     return result

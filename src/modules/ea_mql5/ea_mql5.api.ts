@@ -36,7 +36,7 @@ export class EaMql5Api {
     const { eaMql5 } = body
     const response = await AxiosInstance.post(`/ea_mql5/create`, {
       name: eaMql5.name,
-      description: eaMql5.description,
+      description: eaMql5.description || '',
       mql5Code: eaMql5.mql5Code,
       configIni: {
         symbol: eaMql5.configIni.symbol,
@@ -90,10 +90,8 @@ export class EaMql5Api {
     return data
   }
 
-  static async startRunTest(id: string, configIniText: string) {
-    await AxiosInstance.post(`/ea_mql5/start-run-test/${id}`, {
-      configIniText
-    })
+  static async startRunTest(id: string) {
+    await AxiosInstance.post(`/ea_mql5/start-run-test/${id}`, {})
   }
 
   static async stopRunTest(id: string) {

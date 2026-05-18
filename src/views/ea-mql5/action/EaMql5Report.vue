@@ -78,64 +78,7 @@ const handleStopRunTest = async () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleStartRunTest">
-    <div class="mt-4 flex flex-wrap gap-4">
-      <div>
-        <div>From Date</div>
-        <div><InputDate v-model:value="eaMql5Ref.configIni.fromDate" /></div>
-      </div>
-
-      <div>
-        <div>To Date</div>
-        <div><InputDate v-model:value="eaMql5Ref.configIni.toDate" /></div>
-      </div>
-
-      <div>
-        <div>Symbol</div>
-        <div><InputText v-model:value="eaMql5Ref.configIni.symbol" /></div>
-      </div>
-
-      <div>
-        <div>Period</div>
-        <div><InputText v-model:value="eaMql5Ref.configIni.period" /></div>
-      </div>
-
-      <div>
-        <div>Deposit</div>
-        <div><InputNumber v-model:value="eaMql5Ref.configIni.deposit" /></div>
-      </div>
-
-      <div>
-        <div>Currency</div>
-        <div><InputText v-model:value="eaMql5Ref.configIni.currency" /></div>
-      </div>
-
-      <div>
-        <div>Leverage</div>
-        <div><InputNumber v-model:value="eaMql5Ref.configIni.leverage" /></div>
-      </div>
-    </div>
-
-    <div style="height: 500px" class="mt-4 flex flex-col">
-      <div>MQL5 Config Ini</div>
-      <div style="flex-grow: 1; border: 1px solid #cdcdcd">
-        <MonacoEditor :value="iniConfig" language="ini" readOnly />
-      </div>
-    </div>
-
-    <div class="mt-8 flex gap-4">
-      <VueButton
-        style="margin-left: auto"
-        color="blue"
-        type="button"
-        icon="send"
-        @click="handleStartRunTest"
-        :loading="runTestLoading"
-      >
-        Run Test
-      </VueButton>
-    </div>
-  </form>
+  <div>Report Content</div>
 </template>
 
 <style></style>

@@ -122,28 +122,28 @@ const handleSave = async () => {
     }
     showModal.value = false
   } catch (error) {
-    console.log('🚀 ~ file: ModalUserUpsert.vue:42 ~ handleSave ~ error:', error)
+    console.log('🚀 ~ file: ModalAccountUpsert.vue:42 ~ handleSave ~ error:', error)
   } finally {
     saveLoading.value = false
   }
 }
 
-const handleDelete = async () => {
+const handleDestroy = async () => {
   try {
-    await UserService.deleteOne(user.value.id)
+    await UserService.destroyOne(user.value.id)
     emit('success', user.value, 'DELETE')
     closeModal()
   } catch (error) {
-    console.log('🚀 ~ file: ModalUserUpsert.vue:75 ~ handleDelete ~ error:', error)
+    console.log('🚀 ~ file: ModalAccountUpsert.vue:75 ~ handleDestroy ~ error:', error)
   }
 }
 
-const clickDelete = () => {
+const clickDestroy = () => {
   ModalStore.confirm({
     title: 'Bạn có chắc chắn muốn xóa tài khoản này',
     content: 'Tài khoản đã xóa không thể khôi phục lại được. Bạn vẫn muốn xóa ?',
     async onOk() {
-      await handleDelete()
+      await handleDestroy()
     },
   })
 }
@@ -206,7 +206,7 @@ defineExpose({ openModal })
 
       <div class="p-4 mt-2">
         <div class="flex gap-4">
-          <VueButton color="red" icon="trash" :loading="saveLoading" @click="clickDelete">
+          <VueButton color="red" icon="trash" :loading="saveLoading" @click="clickDestroy">
             Xóa
           </VueButton>
           <VueButton icon="close" type="reset" style="margin-left: auto" @click="closeModal">

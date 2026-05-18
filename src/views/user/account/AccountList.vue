@@ -8,6 +8,7 @@ import ModalAccountUpsert from './ModalAccountUpsert.vue'
 import VuePagination from '../../../common/VuePagination.vue'
 import { InputSelect } from '../../../common/vue-form'
 import { CONFIG } from '@/config'
+import { BugDevelopment } from '@/views/component'
 
 const modalAccountUpsert = ref<InstanceType<typeof ModalAccountUpsert>>()
 
@@ -93,8 +94,8 @@ const deviceLogout = async (userId: number, clientId: string) => {
       <table>
         <thead>
           <tr>
-            <th v-if="CONFIG.MODE === 'development'">ID</th>
-            <th>STT</th>
+            <th v-if="CONFIG.MODE === 'development'"></th>
+            <th>ID</th>
             <th>Username</th>
             <th>Họ Tên</th>
             <th>Vai trò</th>
@@ -106,11 +107,11 @@ const deviceLogout = async (userId: number, clientId: string) => {
           <tr v-if="userList.length === 0">
             <td colspan="20" class="text-center">No data</td>
           </tr>
-          <tr v-for="(user, index) in userList" :key="user.id">
-            <td v-if="CONFIG.MODE === 'development'" style="color: violet" class="text-center">
-              {{ user.id }}
+          <tr v-for="(user) in userList" :key="user.id">
+            <td v-if="CONFIG.MODE === 'development'" style="text-align: center">
+              <BugDevelopment :data="user" />
             </td>
-            <td class="text-center">{{ index + 1 }}</td>
+            <td class="text-center">{{ user.id }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.fullName }}</td>
             <td>
